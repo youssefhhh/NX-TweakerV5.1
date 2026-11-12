@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NX TWEAKER — System & GameLoop Optimizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Custom Desktop Titlebar -->
+    <div class="custom-titlebar" id="customTitlebar">
+        <div class="titlebar-left">
+            <img src="./img/nx.png" alt="Logo" class="titlebar-icon">
+            <span class="titlebar-text">NX Tweaker</span>
+            <span class="titlebar-badge">PRO v4.8</span>
+        </div>
+        <div class="titlebar-drag-region" id="titlebarDrag"></div>
+        <div class="titlebar-controls">
+            <button class="win-control-btn" id="winMinimize" title="Minimize"><i class="fas fa-minus"></i></button>
+            <button class="win-control-btn" id="winMaximize" title="Maximize"><i class="far fa-square"></i></button>
+            <button class="win-control-btn close" id="winClose" title="Close"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+
+    <!-- Active Downloads Floating Panel -->
+    <div class="dl-panel" id="dlPanel">
+        <div class="dl-panel-header">
+            <div class="dl-panel-title">
+                <i class="fas fa-download"></i>
+                <span data-i18n="dl-panel-title">Downloads</span>
+            </div>
+            <button class="dl-panel-hide" id="dlPanelHide">
+                <i class="fas fa-eye-slash"></i> <span data-i18n="dl-hide">Hide</span>
+            </button>
+        </div>
+        <div class="dl-panel-list" id="dlPanelList"></div>
+    </div>
+
+    <!-- Mini Floating Download Bar -->
+    <div class="dl-mini-bar" id="dlMiniBar">
+        <div class="dl-mini-inner" id="dlMiniClick">
+            <i class="fas fa-download"></i>
+            <span id="dlMiniCount">0 downloads</span>
+        </div>
+    </div>
+
+    <!-- App Shell Container -->
+    <div class="container">
+
+        <!-- Classic Minimalist Sidebar -->
+        <nav class="sidebar" id="sidebar">
+
+            <div class="logo-container">
+                <img src="./img/nx.png" alt="NX Logo" class="logo">
+                <div class="brand-text">
+                    <div class="brand-title">NX <span>TWEAKER</span></div>
+                    <div class="brand-badge">PRO v4.8</div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="nav-btn active" data-page="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span data-i18n="nav-home">Home</span>
+                </button>
+
+                <button class="nav-btn" data-page="clean">
+                    <i class="fas fa-broom"></i>
+                    <span data-i18n="nav-clean">Clean</span>
+                </button>
+
+                <button class="nav-btn" data-page="gameloop">
+                    <i class="fas fa-gamepad"></i>
+                    <span data-i18n="nav-gameloop">GameLoop</span>
+                </button>
+
+                <button class="nav-btn" data-page="tweeks">
+                    <i class="fas fa-cogs"></i>
+                    <span data-i18n="nav-tweaks">Tweaks</span>
+                </button>
+
+                <button class="nav-btn" data-page="settings">
+                    <i class="fas fa-sliders-h"></i>
+                    <span data-i18n="nav-settings">Settings</span>
+                </button>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="info-btn" id="langToggle" title="العربية / English">
+                    <i class="fas fa-globe"></i>
+                    <span id="langLabel">AR / EN</span>
+                </button>
+                <button class="info-btn" id="infoToggle">
+                    <i class="fas fa-info-circle"></i>
+                    <span data-i18n="nav-info">About</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- About Modal Popup -->
+        <div class="info-overlay" id="infoOverlay"></div>
+        <div class="info-popup" id="infoPopup">
+            <div class="info-popup-header">
+                <h3><i class="fas fa-info-circle"></i> <span data-i18n="info-about">About NX Tweaker</span></h3>
+                <button class="info-popup-close" id="infoClose"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="info-popup-body">
+                <div class="info-version-badge">v4.8 Stable</div>
+                <p class="info-desc" data-i18n="info-desc">Professional system & GameLoop optimization toolkit built for stable performance and low input lag.</p>
+                
+                <div class="info-social-title" data-i18n="info-follow">Follow Us</div>
+                <div class="info-social-links">
+                    <a href="https://discord.gg/nxtools" class="info-social-link" target="_blank">
+                        <i class="fab fa-discord"></i>
+                        <span>Discord Community</span>
+                    </a>
+                    <a href="https://t.me/NxStoreofficial" class="info-social-link" target="_blank">
+                        <i class="fab fa-telegram"></i>
+                        <span>Telegram Channel</span>
+                    </a>
+                    <a href="https://www.tiktok.com/@nxgaming_?_r=1&_t=ZS-97KkUAQ5Tj3" class="info-social-link" target="_blank">
+                        <i class="fab fa-tiktok"></i>
+                        <span>TikTok</span>
+                    </a>
+                    <a href="https://www.youtube.com/@NXGAMMING_OFFICAL" class="info-social-link" target="_blank">
+                        <i class="fab fa-youtube"></i>
+                        <span>YouTube</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- GameLoop Boost Modal Popup -->
+        <div class="boost-overlay" id="boostOverlay"></div>
+        <div class="boost-modal" id="boostModal">
+            <div class="boost-modal-header">
+                <div class="boost-title-wrap">
+                    <i class="fas fa-rocket boost-header-icon" id="boostHeaderIcon"></i>
+                    <span class="boost-modal-title" id="boostModalTitle" data-i18n="boost-modal-title">GAMELOOP ULTRA BOOST</span>
+                </div>
+                <button class="boost-modal-close" id="boostCloseBtn" title="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="boost-modal-body">
+                <div class="boost-visual-container">
+                    <div class="boost-icon-circle" id="boostIconCircle">
+                        <i class="fas fa-rocket" id="boostVisualIcon"></i>
+                    </div>
+                </div>
+
+                <div class="boost-percentage-wrap">
+                    <span class="boost-percentage-number" id="boostPercentNumber">0</span><span class="boost-percentage-sign">%</span>
+                </div>
+
+                <h3 class="boost-status-title" id="boostStatusTitle">Initializing Turbo Boost...</h3>
+                <p class="boost-status-desc" id="boostStatusDesc">Connecting to ADB engine & preparing parameters...</p>
+
+                <div class="boost-progress-track">
+                    <div class="boost-progress-fill" id="boostProgressBar" style="width: 0%;"></div>
+                </div>
+
+                <div class="boost-steps-info">
+                    <span id="boostStepCounter"><i class="fas fa-layer-group"></i> Step 0/9</span>
+                    <span id="boostStepSpeed"><i class="fas fa-tachometer-alt"></i> Fast</span>
+                </div>
+
+                <div class="boost-footer" id="boostFooter" style="display: none;">
+                    <button class="boost-finish-btn" id="boostFinishBtn">
+                        <i class="fas fa-check-circle"></i> <span data-i18n="boost-finish-btn">Done</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete GameLoop Confirmation Modal -->
+        <div class="confirm-overlay" id="deleteGameloopOverlay"></div>
+        <div class="confirm-modal" id="deleteGameloopModal">
+            <div class="confirm-modal-header">
+                <div class="confirm-title-wrap">
+                    <i class="fas fa-exclamation-triangle confirm-header-icon"></i>
+                    <span class="confirm-modal-title" data-i18n="confirm-delete-title">WARNING</span>
+                </div>
+                <button class="confirm-modal-close" id="deleteGameloopCloseBtn" title="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="confirm-modal-body">
+                <h3 class="confirm-status-title" data-i18n="confirm-delete-gameloop-msg">Are You Sure To Delete Gameloop Completely?</h3>
+                <p class="confirm-status-desc" data-i18n="confirm-delete-gameloop-sub">This action will completely remove the GameLoop emulator, cache, and registry files.</p>
+                <div class="confirm-actions">
+                    <button class="confirm-btn confirm-btn-yes" id="deleteGameloopYesBtn">
+                        <i class="fas fa-check"></i> <span data-i18n="confirm-yes">Yes</span>
+                    </button>
+                    <button class="confirm-btn confirm-btn-no" id="deleteGameloopNoBtn">
+                        <i class="fas fa-times"></i> <span data-i18n="confirm-no">No</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="pages-viewport">
+
+                <!-- ==========================================
+                     PAGE 1: DASHBOARD
+                     ========================================== -->
+                <div class="page active" id="dashboard">
+
+                    <!-- Clean Top Bar -->
+                    <div class="dash-top-bar">
+                        <div class="dash-top-left">
+                            <span class="dash-status-dot"></span>
+                            <div>
+                                <div class="dash-top-title" data-i18n="dash-title">System Status & Overview</div>
+                                <div class="dash-top-subtitle" data-i18n="dash-engine-ready">Optimization engine ready • High performance profile</div>
+                            </div>
+                        </div>
+
+                        <div class="dash-top-actions">
+                            <button class="dash-action-btn primary" data-action="gameloop-boost">
+                                <i class="fas fa-rocket"></i>
+                                <span data-i18n="dash-quick-boost">Quick Boost</span>
+                            </button>
+                            <button class="dash-action-btn secondary" data-action="full-clean">
+                                <i class="fas fa-broom"></i>
+                                <span data-i18n="dash-quick-clean">Quick Clean</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 4-Grid Live Telemetry Meters -->
+                    <div class="telemetry-grid">
+                        <!-- CPU -->
+                        <div class="telemetry-card" data-metric="cpu">
+                            <div class="telemetry-header">
+                                <div class="telemetry-title-wrap">
+                                    <i class="fas fa-microchip"></i>
+                                    <span class="telemetry-title" data-i18n="metric-cpu">CPU Processor</span>
+                                </div>
+                                <span class="telemetry-value" id="cpu-value">0%</span>
+                            </div>
+                            <div class="telemetry-track">
+                                <div class="telemetry-fill" id="cpu-fill" style="width: 0%;"></div>
+                            </div>
+                            <div class="telemetry-details">
+                                <span id="cpu-freq">Freq: 0 GHz</span>
+                                <span id="cpu-temp">Temp: 0°C</span>
+                            </div>
+                        </div>
+
+                        <!-- RAM -->
+                        <div class="telemetry-card" data-metric="ram">
+                            <div class="telemetry-header">
+                                <div class="telemetry-title-wrap">
+                                    <i class="fas fa-memory"></i>
+                                    <span class="telemetry-title" data-i18n="metric-ram">Memory (RAM)</span>
+                                </div>
+                                <span class="telemetry-value" id="ram-value">0%</span>
+                            </div>
+                            <div class="telemetry-track">
+                                <div class="telemetry-fill" id="ram-fill" style="width: 0%;"></div>
+                            </div>
+                            <div class="telemetry-details">
+                                <span id="ram-used">Used: 0 GB</span>
+                                <span id="ram-total">Total: 16 GB</span>
+                            </div>
+                        </div>
+
+                        <!-- GPU -->
+                        <div class="telemetry-card" data-metric="gpu">
+                            <div class="telemetry-header">
+                                <div class="telemetry-title-wrap">
+                                    <i class="fas fa-tv"></i>
+                                    <span class="telemetry-title" data-i18n="metric-gpu">Graphics (GPU)</span>
+                                </div>
+                                <span class="telemetry-value" id="gpu-value">0%</span>
+                            </div>
+                            <div class="telemetry-track">
+                                <div class="telemetry-fill" id="gpu-fill" style="width: 0%;"></div>
+                            </div>
+                            <div class="telemetry-details">
+                                <span id="gpu-temp">Temp: 0°C</span>
+                                <span id="gpu-memory">VRAM: 0 GB</span>
+                            </div>
+                        </div>
+
+                        <!-- DISK -->
+                        <div class="telemetry-card" data-metric="disk">
+                            <div class="telemetry-header">
+                                <div class="telemetry-title-wrap">
+                                    <i class="fas fa-hdd"></i>
+                                    <span class="telemetry-title" data-i18n="metric-disk">Storage (C:)</span>
+                                </div>
+                                <span class="telemetry-value" id="disk-value">0%</span>
+                            </div>
+                            <div class="telemetry-track">
+                                <div class="telemetry-fill" id="disk-fill" style="width: 0%;"></div>
+                            </div>
+                            <div class="telemetry-details">
+                                <span id="disk-used">Used: 0 GB</span>
+                                <span id="disk-free">Free: 0 GB</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Tools Section -->
+                    <div class="section-subhead">
+                        <i class="fas fa-bolt"></i>
+                        <span data-i18n="dash-quick-tools">Essential Tools & Shortcuts</span>
+                    </div>
+
+                    <!-- 4 Symmetrical Quick Tool Tiles -->
+                    <div class="quick-tools-grid">
+                        <button class="quick-tool-btn" data-action="gameloop-boost" title="ADB Android kernel acceleration">
+                            <i class="fas fa-rocket"></i>
+                            <span class="quick-tool-text" data-i18n="btn-boost">Boost GameLoop</span>
+                        </button>
+
+                        <button class="quick-tool-btn" data-action="full-clean" title="Complete temp files & system junk cleanup">
+                            <i class="fas fa-magic"></i>
+                            <span class="quick-tool-text" data-i18n="btn-full-clean">Full Clean</span>
+                        </button>
+
+                        <button class="quick-tool-btn" data-action="clean-gpu" title="Flush DirectX & shader cache">
+                            <i class="fas fa-microchip"></i>
+                            <span class="quick-tool-text" data-i18n="btn-clean-gpu">Clean GPU</span>
+                        </button>
+
+                        <button class="quick-tool-btn" data-action="clear-temp" title="Purge %TEMP% & Prefetch cache">
+                            <i class="fas fa-trash"></i>
+                            <span class="quick-tool-text" data-i18n="btn-clear-temp">Clear Temp</span>
+                        </button>
+                    </div>
+
+                    <!-- System Specs Footer -->
+                    <div class="sys-specs-bar">
+                        <div class="sys-specs-item">
+                            <i class="fas fa-microchip"></i>
+                            <span id="proc-cores">Cores: 8</span>
+                            <span>•</span>
+                            <span id="proc-threads">Threads: 16</span>
+                        </div>
+                        <div class="sys-specs-sep"></div>
+                        <div class="sys-specs-item">
+                            <i class="fab fa-windows"></i>
+                            <span>Windows 64-bit</span>
+                        </div>
+                        <div class="sys-specs-sep"></div>
+                        <div class="sys-specs-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>NX Tweaker <strong>v4.8 Stable</strong></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ==========================================
+                     PAGE 2: SYSTEM CLEANER
+                     ========================================== -->
+                <div class="page" id="clean">
+                    <div class="page-title-wrap">
+                        <h1 class="page-title"><i class="fas fa-broom"></i> <span data-i18n="page-clean">SYSTEM CLEANER</span></h1>
+                        <span class="page-subtitle" data-i18n="clean-subtitle">Clean temporary cache, network sockets, and unnecessary disk footprint</span>
+                    </div>
+
+                    <div class="clean-grid">
+                        <button class="clean-btn" data-action="full-clean" title="Complete temp files & system junk cleanup">
+                            <i class="fas fa-magic"></i>
+                            <span class="clean-btn-text" data-i18n="btn-full-clean">Full Clean</span>
+                        </button>
+
+                        <button class="clean-btn" data-action="ip-flush" title="Reset Winsock & flush DNS cache">
+                            <i class="fas fa-network-wired"></i>
+                            <span class="clean-btn-text" data-i18n="btn-ip-flush">IP Flush</span>
+                        </button>
+
+                        <button class="clean-btn" data-action="clear-temp" title="Purge %TEMP% & Prefetch cache">
+                            <i class="fas fa-trash"></i>
+                            <span class="clean-btn-text" data-i18n="btn-clear-temp">Clear Temp</span>
+                        </button>
+
+                        <button class="clean-btn" data-action="clean-gpu" title="Flush DirectX & shader cache">
+                            <i class="fas fa-microchip"></i>
+                            <span class="clean-btn-text" data-i18n="btn-clean-gpu">Clean GPU</span>
+                        </button>
+
+                        <button class="clean-btn" data-action="delete-nx-folder" title="Delete C:\NX temporary tools folder">
+                            <i class="fas fa-folder-minus"></i>
+                            <span class="clean-btn-text" data-i18n="btn-delete-nx-folder">NX Folder</span>
+                        </button>
+
+                        <button class="clean-btn" data-action="delete-gameloop" title="Complete emulator & registry removal">
+                            <i class="fas fa-trash-alt"></i>
+                            <span class="clean-btn-text" data-i18n="btn-delete-gameloop">DELETE GAMELOOP</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ==========================================
+                     PAGE 3: GAMELOOP OPTIMIZER
+                     ========================================== -->
+                <div class="page" id="gameloop">
+                    <div class="page-title-wrap">
+                        <h1 class="page-title"><i class="fas fa-gamepad"></i> <span data-i18n="page-gameloop">GAMELOOP OPTIMIZER</span></h1>
+                        <span class="page-subtitle" data-i18n="gameloop-subtitle">Direct ADB tuning, renderer adjustments and graphics profiles</span>
+                    </div>
+
+                    <!-- ADB Status Banner -->
+                    <div class="adb-status-container">
+                        <span class="adb-status-label" data-i18n="adb-status-label">GameLoop ADB Connection:</span>
+                        <div class="adb-status-badge disconnected" id="adbStatusBadge">
+                            <span class="adb-status-dot"></span>
+                            <span class="adb-status-text" id="adbStatusText">Disconnected</span>
+                        </div>
+                    </div>
+
+                    <!-- Engine Tools -->
+                    <div class="tweeks-section">
+                        <h3 class="tweeks-section-title">
+                            <i class="fas fa-play-circle"></i>
+                            <span data-i18n="section-start-game">Game Engine Tools</span>
+                        </h3>
+                        <div class="gameloop-grid">
+                            <button class="gameloop-btn" data-action="gameloop-boost" id="btnGameloopBoost" title="ADB Android kernel acceleration">
+                                <i class="fas fa-rocket"></i>
+                                <span class="gameloop-btn-text" data-i18n="btn-boost">Boost GameLoop</span>
+                            </button>
+
+                            <button class="gameloop-btn" data-action="fix-opengl" id="btnFixOpenGL" title="Unlock native OpenGL renderer">
+                                <i class="fas fa-cube"></i>
+                                <span class="gameloop-btn-text" data-i18n="btn-fix-opengl">Fix Open GL</span>
+                            </button>
+
+                            <button class="gameloop-btn" data-action="fix-vt" id="btnFixVT" title="Restore defaults & fix conflicts">
+                                <i class="fas fa-undo-alt"></i>
+                                <span class="gameloop-btn-text" data-i18n="btn-fix-vt">Fix VT</span>
+                            </button>
+
+                            <button class="gameloop-btn" data-action="start-gameloop" title="Launch emulator directly">
+                                <i class="fas fa-play"></i>
+                                <span class="gameloop-btn-text" data-i18n="btn-start-gl">Start GameLoop</span>
+                            </button>
+
+                            <button class="gameloop-btn" data-action="start-game" title="Quick launch PUBG Mobile">
+                                <i class="fas fa-crosshairs"></i>
+                                <span class="gameloop-btn-text" data-i18n="btn-start-game">Start Game</span>
+                            </button>
+
+                            <button class="gameloop-btn" data-action="kill-emulator" title="Force stop all emulator tasks">
+                                <i class="fas fa-power-off"></i>
+                                <span class="gameloop-btn-text" data-i18n="btn-kill-emulator">Kill Emulator</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Graphics MODS Section -->
+                    <div class="mods-section">
+                        <div class="page-title-wrap">
+                            <h2 class="page-title"><i class="fas fa-palette"></i> <span data-i18n="section-mods">GRAPHICS MODS</span></h2>
+                        </div>
+
+                        <!-- Smooth Category -->
+                        <div class="mod-category">
+                            <h3 class="mod-category-title"><i class="fas fa-tachometer-alt"></i> Smooth 120 FPS</h3>
+                            <div class="mods-grid">
+                                <button class="mod-btn" data-mod="super-smooth-120">
+                                    <i class="fas fa-bolt"></i>
+                                    <span class="mod-btn-text">Super Smooth 120FPS</span>
+                                </button>
+                                <button class="mod-btn" data-mod="smooth-120">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span class="mod-btn-text">Smooth 120FPS</span>
+                                </button>
+                                <button class="mod-btn" data-mod="balanced-120">
+                                    <i class="fas fa-balance-scale"></i>
+                                    <span class="mod-btn-text">Balanced 120FPS</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- HDR Category -->
+                        <div class="mod-category">
+                            <h3 class="mod-category-title"><i class="fas fa-sun"></i> HDR Graphics</h3>
+                            <div class="mods-grid">
+                                <button class="mod-btn" data-mod="hdr-60">
+                                    <i class="fas fa-sun"></i>
+                                    <span class="mod-btn-text">HDR 60FPS</span>
+                                </button>
+                                <button class="mod-btn" data-mod="hdr-90">
+                                    <i class="fas fa-sun"></i>
+                                    <span class="mod-btn-text">HDR 90FPS</span>
+                                </button>
+                                <button class="mod-btn" data-mod="hdr-120">
+                                    <i class="fas fa-sun"></i>
+                                    <span class="mod-btn-text">HDR 120FPS</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Ultra HDR Category -->
+                        <div class="mod-category">
+                            <h3 class="mod-category-title"><i class="fas fa-tv"></i> Ultra HDR Graphics</h3>
+                            <div class="mods-grid">
+                                <button class="mod-btn" data-mod="ultra-hdr-60">
+                                    <i class="fas fa-tv"></i>
+                                    <span class="mod-btn-text">Ultra HDR 60FPS</span>
+                                </button>
+                                <button class="mod-btn" data-mod="ultra-hdr-90">
+                                    <i class="fas fa-tv"></i>
+                                    <span class="mod-btn-text">Ultra HDR 90FPS</span>
+                                </button>
+                                <button class="mod-btn" data-mod="ultra-hdr-120">
+                                    <i class="fas fa-tv"></i>
+                                    <span class="mod-btn-text">Ultra HDR 120FPS</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================
+                     PAGE 4: TWEAKS
+                     ========================================== -->
+                <div class="page" id="tweeks">
+                    <div class="page-title-wrap">
+                        <h1 class="page-title"><i class="fas fa-cogs"></i> <span data-i18n="page-tweaks">SYSTEM TWEAKS</span></h1>
+                        <span class="page-subtitle" data-i18n="tweaks-subtitle">Windows deep optimizations, background debloater and latency helpers</span>
+                    </div>
+
+                    <!-- Tweaks App Section -->
+                    <div class="tweeks-section">
+                        <h3 class="tweeks-section-title">
+                            <i class="fas fa-rocket"></i>
+                            <span data-i18n="section-tweaks-app">Tweaks App</span>
+                        </h3>
+                        <div class="tweeks-grid">
+                            <button class="tweeks-btn" data-action="nx-script" title="System registry optimization script">
+                                <i class="fas fa-code"></i>
+                                <span class="tweeks-btn-text">Nx Script</span>
+                            </button>
+
+                            <button class="tweeks-btn" data-action="optimize" title="Latency & power plan performance">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <span class="tweeks-btn-text" data-i18n="btn-optimize">Optimize</span>
+                            </button>
+
+                            <button class="tweeks-btn" data-action="debloate" title="Disable telemetry & Windows bloat">
+                                <i class="fas fa-broom"></i>
+                                <span class="tweeks-btn-text" data-i18n="btn-debloate">Debloate</span>
+                            </button>
+
+                            <button class="tweeks-btn" data-action="download-programs" title="Park Control & Process Lasso bundle">
+                                <i class="fas fa-download"></i>
+                                <span class="tweeks-btn-text" data-i18n="btn-download-programs">Programs</span>
+                            </button>
+
+                            <button class="tweeks-btn" data-action="download-gameloop-opt" title="Optimizer archive package">
+                                <i class="fas fa-file-archive"></i>
+                                <span class="tweeks-btn-text" data-i18n="btn-gameloop-opt">GameLoop Optimizer</span>
+                            </button>
+
+                            <button class="tweeks-btn" data-action="download-nx-json" title="Custom competitive config files">
+                                <i class="fas fa-file-code"></i>
+                                <span class="tweeks-btn-text" data-i18n="btn-nx-json">NX JSON</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tweaks Helper Section -->
+                    <div class="tweeks-section">
+                        <h3 class="tweeks-section-title">
+                            <i class="fas fa-tools"></i>
+                            <span data-i18n="section-tweaks-helper">Tweaks Helper</span>
+                        </h3>
+                        <div class="tweeks-grid">
+                            <button class="tweeks-btn" data-action="msi-util" title="Message Signaled Interrupts utility">
+                                <i class="fas fa-cog"></i>
+                                <span class="tweeks-btn-text">MSI Util</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================
+                     PAGE 5: SETTINGS
+                     ========================================== -->
+                <div class="page" id="settings">
+                    <div class="page-title-wrap">
+                        <h1 class="page-title"><i class="fas fa-sliders-h"></i> <span data-i18n="page-settings">SETTINGS</span></h1>
+                        <span class="page-subtitle" data-i18n="settings-subtitle">Direct shortcuts to Windows control panels and system utilities</span>
+                    </div>
+
+                    <div class="settings-grid">
+                        <button class="settings-btn" data-action="control-panel" title="Classic Windows settings">
+                            <i class="fas fa-sliders-h"></i>
+                            <span class="settings-btn-text" data-i18n="btn-control-panel">Control Panel</span>
+                        </button>
+
+                        <button class="settings-btn" data-action="visual-effects" title="Visual performance options">
+                            <i class="fas fa-eye"></i>
+                            <span class="settings-btn-text" data-i18n="btn-visual-effects">Visual Effects</span>
+                        </button>
+
+                        <button class="settings-btn" data-action="msconfig" title="System startup configuration">
+                            <i class="fas fa-cogs"></i>
+                            <span class="settings-btn-text">Msconfig</span>
+                        </button>
+
+                        <button class="settings-btn" data-action="windows-update-blocker" title="Disable Windows updates">
+                            <i class="fas fa-shield-alt"></i>
+                            <span class="settings-btn-text" data-i18n="btn-update-blocker">Update Blocker</span>
+                        </button>
+
+                        <button class="settings-btn" data-action="defender-control" title="Toggle Windows Defender">
+                            <i class="fas fa-user-shield"></i>
+                            <span class="settings-btn-text" data-i18n="btn-defender">Defender Control</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+
+    <script>
+        // Toast Notification System
+        function showNotification(message, type = 'success', title = null) {
+            let container = document.getElementById("notification-container");
+            if (!container) {
+                container = document.createElement("div");
+                container.id = "notification-container";
+                document.body.appendChild(container);
+            }
+
+            const notificationTitle = title || getTitle(type);
+
+            // Check if there is an existing notification for this title or an active loading card to update in-place
+            const existing = Array.from(container.querySelectorAll(".notification")).find(n => {
+                const tEl = n.querySelector(".notification-title");
+                return tEl && (tEl.textContent === notificationTitle || (n.classList.contains("loading") && type !== "loading"));
+            });
+
+            if (existing) {
+                existing.className = `notification ${type}`;
+                const iconEl = existing.querySelector(".notification-icon");
+                const titleEl = existing.querySelector(".notification-title");
+                const textEl = existing.querySelector(".notification-text");
+
+                if (iconEl) iconEl.innerHTML = getIcon(type);
+                if (titleEl) titleEl.textContent = notificationTitle;
+                if (textEl) textEl.textContent = message;
+
+                if (existing._autoRemoveTimer) clearTimeout(existing._autoRemoveTimer);
+                existing._autoRemoveTimer = setTimeout(() => {
+                    if (existing.parentNode) {
+                        existing.style.animation = 'fadeOutSlide 0.3s ease-in-out forwards';
+                        setTimeout(() => { if (existing.parentNode) existing.remove(); }, 300);
+                    }
+                }, type === 'loading' ? 8000 : 3500);
+
+                return existing;
+            }
+
+            const notification = document.createElement("div");
+            notification.classList.add("notification", type);
+
+            notification.innerHTML = `
+                <div class="notification-icon">${getIcon(type)}</div>
+                <div class="notification-content">
+                    <h4 class="notification-title">${notificationTitle}</h4>
+                    <p class="notification-text">${message}</p>
+                </div>
+                <button class="notification-close">&times;</button>
+            `;
+
+            container.appendChild(notification);
+
+            const removeNotification = () => {
+                if (notification.parentNode) {
+                    notification.style.animation = 'fadeOutSlide 0.3s ease-in-out forwards';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.remove();
+                        }
+                    }, 300);
+                }
+            };
+
+            const autoRemoveTimer = setTimeout(removeNotification, type === 'loading' ? 8000 : 3500);
+            notification._autoRemoveTimer = autoRemoveTimer;
+
+            const closeBtn = notification.querySelector(".notification-close");
+            closeBtn.addEventListener("click", () => {
+                clearTimeout(autoRemoveTimer);
+                removeNotification();
+            });
+
+            return notification;
+        }
+
+        function getIcon(type) {
+            const icons = {
+                'success': '<i class="fas fa-check"></i>',
+                'error': '<i class="fas fa-exclamation-triangle"></i>',
+                'warning': '<i class="fas fa-bolt"></i>',
+                'info': '<i class="fas fa-info-circle"></i>',
+                'loading': '<i class="fas fa-spinner fa-spin"></i>',
+                'default': '<i class="fas fa-bell"></i>'
+            };
+            return icons[type] || icons['default'];
+        }
+
+        function getTitle(type) {
+            const titles = {
+                'success': 'Success',
+                'error': 'Error',
+                'warning': 'Warning',
+                'info': 'Notice',
+                'loading': 'Loading...',
+                'default': 'Notification'
+            };
+            return titles[type] || titles['default'];
+        }
+
+        const notify = {
+            success: (message, title) => showNotification(message, 'success', title),
+            error: (message, title) => showNotification(message, 'error', title),
+            warning: (message, title) => showNotification(message, 'warning', title),
+            info: (message, title) => showNotification(message, 'info', title),
+            loading: (message, title) => showNotification(message, 'loading', title)
+        };
+
+        window.showSuccess = (message, title) => notify.success(message, title);
+        window.showError = (message, title) => notify.error(message, title);
+        window.showWarning = (message, title) => notify.warning(message, title);
+        window.showInfo = (message, title) => notify.info(message, title);
+        window.showLoading = (message, title) => notify.loading(message, title);
+
+        // Download Panel & Mini Bar Management
+        var dlPanelHidden = false;
+        var dlItems = {};
+
+        window.updateDownloadProgress = function (id, title, percent, receivedMB, totalMB, speed) {
+            var list = document.getElementById('dlPanelList');
+            var item = document.getElementById('dli-' + id);
+
+            if (!item) {
+                item = document.createElement('div');
+                item.className = 'dl-item';
+                item.id = 'dli-' + id;
+                item.innerHTML = '<div class="dl-item-header"><span class="dl-item-name"></span><button class="dl-item-cancel" title="Cancel"><i class="fas fa-times"></i></button></div><div class="dl-item-bar-wrap"><div class="dl-item-bar" style="width:0%"></div></div><div class="dl-item-info"><span class="dl-item-percent">0%</span><span class="dl-item-size"></span><span class="dl-item-speed"></span></div>';
+                item.querySelector('.dl-item-cancel').addEventListener('click', function () {
+                    if (window.chrome && window.chrome.webview) window.chrome.webview.postMessage('cancel-dl:' + id);
+                });
+                list.appendChild(item);
+                dlItems[id] = true;
+            }
+
+            item.querySelector('.dl-item-name').textContent = title;
+            item.querySelector('.dl-item-bar').style.width = percent + '%';
+            item.querySelector('.dl-item-percent').textContent = percent + '%';
+            if (totalMB !== '0.0') item.querySelector('.dl-item-size').textContent = receivedMB + ' / ' + totalMB + ' MB';
+            item.querySelector('.dl-item-speed').textContent = speed;
+
+            var count = Object.keys(dlItems).length;
+            document.getElementById('dlMiniCount').textContent = count + ' download' + (count > 1 ? 's' : '');
+
+            if (!dlPanelHidden) document.getElementById('dlPanel').classList.add('active');
+            document.getElementById('dlMiniBar').classList.add('active');
+        };
+
+        window.removeDownloadItem = function (id) {
+            var item = document.getElementById('dli-' + id);
+            if (item) item.remove();
+            delete dlItems[id];
+
+            var count = Object.keys(dlItems).length;
+            if (count === 0) {
+                document.getElementById('dlPanel').classList.remove('active');
+                document.getElementById('dlMiniBar').classList.remove('active');
+                dlPanelHidden = false;
+            } else {
+                document.getElementById('dlMiniCount').textContent = count + ' download' + (count > 1 ? 's' : '');
+            }
+        };
+
+        document.getElementById('dlPanelHide').addEventListener('click', function () {
+            dlPanelHidden = true;
+            document.getElementById('dlPanel').classList.remove('active');
+        });
+
+        document.getElementById('dlMiniClick').addEventListener('click', function () {
+            dlPanelHidden = false;
+            document.getElementById('dlPanel').classList.add('active');
+        });
+
+        // ==========================================
+        // Bilingual Language Engine (AR / EN)
+        // ==========================================
+        var currentLang = localStorage.getItem('nxLang') || 'en';
+        var translations = {
+            'nav-home': 'الرئيسية',
+            'nav-clean': 'تنظيف',
+            'nav-gameloop': 'جيم لوب',
+            'nav-tweaks': 'تعديلات',
+            'nav-settings': 'الإعدادات',
+            'nav-info': 'معلومات',
+            'dl-panel-title': 'التحميلات',
+            'dl-hide': 'إخفاء',
+            'info-about': 'عن NX Tweaker',
+            'info-desc': 'أداة احترافية لتحسين وتنظيف وتسريع الويندوز ومحاكي جيم لوب للحصول على أقصى أداء وثبات في الألعاب.',
+            'info-follow': 'تابعنا',
+            'dash-title': 'حالة النظام ولوحة التحكم',
+            'dash-engine-ready': 'محرك الأداء جاهز • وضع الأداء الأقصى مفعل',
+            'dash-quick-boost': 'تسريع فوري',
+            'dash-quick-clean': 'تنظيف فوري',
+            'metric-cpu': 'المعالج (CPU)',
+            'metric-ram': 'الذاكرة (RAM)',
+            'metric-gpu': 'كارت الشاشة (GPU)',
+            'metric-disk': 'وحدة التخزين (C:)',
+            'dash-quick-tools': 'أهم الأدوات والاختصارات الشائعة',
+            'page-clean': 'تنظيف النظام',
+            'clean-subtitle': 'مسح الملفات المؤقتة، تفريغ كاش الشبكة وتقليل مساحة التخزين',
+            'btn-full-clean': 'تنظيف شامل',
+            'btn-ip-flush': 'تفريغ IP',
+            'btn-clear-temp': 'مسح المؤقتات',
+            'btn-clean-gpu': 'تنظيف كارت الشاشة',
+            'btn-delete-nx-folder': 'حذف مجلد NX',
+            'btn-delete-gameloop': 'حذف جيم لوب',
+            'page-gameloop': 'محسّن جيم لوب',
+            'gameloop-subtitle': 'تسريع محاكي جيم لوب عبر ADB وإصلاحات OpenGL',
+            'adb-status-label': 'اتصال جيم لوب عبر ADB:',
+            'section-start-game': 'أدوات تشغيل المحاكي',
+            'btn-boost': 'تسريع المحاكي',
+            'btn-fix-opengl': 'إصلاح Open GL',
+            'btn-fix-vt': 'إصلاح VT',
+            'btn-start-gl': 'تشغيل جيم لوب',
+            'btn-start-game': 'تشغيل اللعبة',
+            'btn-kill-emulator': 'إيقاف المحاكي',
+            'section-mods': 'مودات الجرافيك والفريمات',
+            'page-tweaks': 'التعديلات',
+            'tweaks-subtitle': 'تعديلات ريجستري، إزالة البرامج غير الضرورية وأدوات الاستجابة',
+            'section-tweaks-app': 'تطبيقات التعديل',
+            'btn-optimize': 'تحسين',
+            'btn-debloate': 'إزالة المخلفات',
+            'btn-download-programs': 'البرامج',
+            'btn-gameloop-opt': 'محسّن جيم لوب NX',
+            'btn-nx-json': 'ملف NX JSON',
+            'section-tweaks-helper': 'أدوات مساعدة',
+            'page-settings': 'الإعدادات',
+            'settings-subtitle': 'اختصارات سريعة لإعدادات وأدوات تحكم الويندوز الأساسية',
+            'btn-control-panel': 'لوحة التحكم',
+            'btn-visual-effects': 'التأثيرات المرئية',
+            'btn-update-blocker': 'حظر التحديثات',
+            'btn-defender': 'تعطيل الحماية',
+            'boost-modal-title': 'تسريع جيم لوب الفائق',
+            'boost-finish-btn': 'تم بنجاح',
+            'confirm-delete-title': 'تحذير',
+            'confirm-delete-gameloop-msg': 'هل أنت متأكد من حذف محاكي جيم لوب بالكامل؟',
+            'confirm-delete-gameloop-sub': 'سيتم حذف المحاكي وجميع ملفاته ومفاتيح الريجستري نهائياً.',
+            'confirm-yes': 'نعم',
+            'confirm-no': 'لا'
+        };
+
+        var originals = {};
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('nxLang', lang);
+            document.documentElement.setAttribute('lang', lang);
+
+            document.querySelectorAll('[data-i18n]').forEach(function (el) {
+                var key = el.getAttribute('data-i18n');
+                if (lang === 'ar' && translations[key]) {
+                    if (!originals[key]) originals[key] = el.innerHTML;
+                    el.innerHTML = translations[key];
+                } else if (lang === 'en' && originals[key]) {
+                    el.innerHTML = originals[key];
+                }
+            });
+
+            var btn = document.getElementById('langLabel');
+            if (btn) {
+                btn.textContent = lang === 'ar' ? 'EN / AR' : 'AR / EN';
+            }
+        }
+
+        document.getElementById('langToggle').addEventListener('click', function () {
+            setLanguage(currentLang === 'en' ? 'ar' : 'en');
+        });
+
+        if (currentLang === 'ar') setLanguage('ar');
+
+        // GameLoop Boost Modal Controller
+        window.updateBoostModal = function(percent, title, desc, stepStr, status, headerTitle, headerIcon) {
+            const overlay = document.getElementById("boostOverlay");
+            const modal = document.getElementById("boostModal");
+            const percentEl = document.getElementById("boostPercentNumber");
+            const titleEl = document.getElementById("boostStatusTitle");
+            const descEl = document.getElementById("boostStatusDesc");
+            const barEl = document.getElementById("boostProgressBar");
+            const stepEl = document.getElementById("boostStepCounter");
+            const visualIcon = document.getElementById("boostVisualIcon");
+            const headerTitleEl = document.getElementById("boostModalTitle");
+            const headerIconEl = document.getElementById("boostHeaderIcon");
+            const footer = document.getElementById("boostFooter");
+            const closeBtn = document.getElementById("boostCloseBtn");
+
+            if (!modal || !overlay) return;
+
+            overlay.classList.add("active");
+            modal.classList.add("active");
+
+            if (headerTitle && headerTitleEl) headerTitleEl.textContent = headerTitle;
+            if (headerIcon && headerIconEl) headerIconEl.className = headerIcon + " boost-header-icon";
+
+            if (percentEl) percentEl.textContent = Math.min(100, Math.max(0, percent));
+            if (barEl) barEl.style.width = Math.min(100, Math.max(0, percent)) + "%";
+            if (titleEl && title) titleEl.textContent = title;
+            if (descEl && desc) descEl.textContent = desc;
+            if (stepEl && stepStr) stepEl.innerHTML = '<i class="fas fa-layer-group"></i> ' + stepStr;
+
+            if (status === 'success') {
+                modal.classList.add("success");
+                modal.classList.remove("error");
+                if (visualIcon) visualIcon.className = "fas fa-check-circle";
+                if (footer) footer.style.display = "block";
+                if (closeBtn) closeBtn.style.display = "flex";
+            } else if (status === 'error') {
+                modal.classList.add("error");
+                modal.classList.remove("success");
+                if (visualIcon) visualIcon.className = "fas fa-exclamation-triangle";
+                if (footer) footer.style.display = "block";
+                if (closeBtn) closeBtn.style.display = "flex";
+            } else {
+                modal.classList.remove("success", "error");
+                if (visualIcon) {
+                    if (headerIcon) visualIcon.className = headerIcon;
+                    else visualIcon.className = "fas fa-rocket";
+                }
+                if (footer) footer.style.display = "none";
+                if (closeBtn) closeBtn.style.display = "none";
+            }
+        };
+
+        window.closeBoostModal = function() {
+            const overlay = document.getElementById("boostOverlay");
+            const modal = document.getElementById("boostModal");
+            if (overlay) overlay.classList.remove("active");
+            if (modal) modal.classList.remove("active");
+        };
+
+        const bClose = document.getElementById("boostCloseBtn");
+        if (bClose) bClose.addEventListener("click", window.closeBoostModal);
+        const bFinish = document.getElementById("boostFinishBtn");
+        if (bFinish) bFinish.addEventListener("click", window.closeBoostModal);
+
+    </script>
+</body>
+
+</html>
