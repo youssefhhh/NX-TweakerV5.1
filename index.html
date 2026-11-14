@@ -81,11 +81,6 @@
                     <span data-i18n="nav-gameloop">GameLoop</span>
                 </button>
 
-                <button class="nav-btn" data-page="gameloop-settings">
-                    <i class="fas fa-sliders-h"></i>
-                    <span data-i18n="nav-gl-settings">GL Settings</span>
-                </button>
-
                 <button class="nav-btn" data-page="tweeks">
                     <i class="fas fa-cogs"></i>
                     <span data-i18n="nav-tweaks">Tweaks</span>
@@ -431,10 +426,29 @@
                             <span data-i18n="section-start-game">Game Engine Tools</span>
                         </h3>
                         <div class="gameloop-grid">
+                            <button class="gameloop-btn" data-action="gameloop-boost" id="btnGameloopBoost" title="ADB Android kernel acceleration">
+                                <i class="fas fa-rocket"></i>
+                                <span class="gameloop-btn-text" data-i18n="btn-boost">Boost GameLoop</span>
+                            </button>
+
+                            <button class="gameloop-btn" data-action="fix-opengl" id="btnFixOpenGL" title="Unlock native OpenGL renderer">
+                                <i class="fas fa-cube"></i>
+                                <span class="gameloop-btn-text" data-i18n="btn-fix-opengl">Fix Open GL</span>
+                            </button>
+
+                            <button class="gameloop-btn" data-action="fix-vt" id="btnFixVT" title="Restore defaults & fix conflicts">
+                                <i class="fas fa-undo-alt"></i>
+                                <span class="gameloop-btn-text" data-i18n="btn-fix-vt">Fix VT</span>
+                            </button>
 
                             <button class="gameloop-btn" data-action="start-gameloop" title="Launch emulator directly">
                                 <i class="fas fa-play"></i>
                                 <span class="gameloop-btn-text" data-i18n="btn-start-gl">Start GameLoop</span>
+                            </button>
+
+                            <button class="gameloop-btn" data-action="start-game" title="Quick launch PUBG Mobile">
+                                <i class="fas fa-crosshairs"></i>
+                                <span class="gameloop-btn-text" data-i18n="btn-start-game">Start Game</span>
                             </button>
 
                             <button class="gameloop-btn" data-action="kill-emulator" title="Force stop all emulator tasks">
@@ -510,214 +524,7 @@
                 </div>
 
                 <!-- ==========================================
-                     PAGE 4: GAMELOOP SETTINGS
-                     ========================================== -->
-                <div class="page" id="gameloop-settings">
-                    <div class="page-title-wrap">
-                        <h1 class="page-title"><i class="fas fa-sliders-h"></i> <span data-i18n="gl-settings-title">GAMELOOP SETTINGS</span></h1>
-                        <p class="page-subtitle" data-i18n="gl-settings-subtitle">Select Rendering Engine, In-Emulator Mouse Smoothing & Samsung 120Hz Tablet Profiles</p>
-                    </div>
-
-                    <!-- 1. Rendering Engine Section -->
-                    <div class="tweeks-section">
-                        <h3 class="tweeks-section-title">
-                            <i class="fas fa-microchip"></i>
-                            <span data-i18n="engine-section-title">Graphics Rendering Engine (اختيار المحرك)</span>
-                        </h3>
-                        <div class="engine-selector-grid">
-                            <div class="engine-card" data-action="set-engine-vulkan" id="engineVulkan">
-                                <div class="engine-card-header">
-                                    <div class="engine-icon-wrap vulkan-icon"><i class="fas fa-bolt"></i></div>
-                                    <div class="engine-title-wrap">
-                                        <div class="engine-name">Vulkan Mode</div>
-                                        <div class="engine-badge badge-high" data-i18n="badge-high-perf">High Performance</div>
-                                    </div>
-                                    <div class="engine-radio-circle"><i class="fas fa-check"></i></div>
-                                </div>
-                                <div class="engine-card-desc" data-i18n="vulkan-desc">
-                                    High-performance rendering mode. Best stability, ultra smoothness, and low latency for PUBG Mobile.
-                                </div>
-                            </div>
-
-                            <div class="engine-card" data-action="set-engine-opengl" id="engineOpenGL">
-                                <div class="engine-card-header">
-                                    <div class="engine-icon-wrap opengl-icon"><i class="fas fa-cube"></i></div>
-                                    <div class="engine-title-wrap">
-                                        <div class="engine-name">OpenGL Mode</div>
-                                        <div class="engine-badge badge-compat" data-i18n="badge-efficiency">Efficiency Mode</div>
-                                    </div>
-                                    <div class="engine-radio-circle"><i class="fas fa-check"></i></div>
-                                </div>
-                                <div class="engine-card-desc" data-i18n="opengl-desc">
-                                    Efficiency mode. Supports highest graphical fidelity and textures for a wide range of GPU drivers.
-                                </div>
-                            </div>
-
-                            <div class="engine-card active" data-action="set-engine-auto" id="engineAuto">
-                                <div class="engine-card-header">
-                                    <div class="engine-icon-wrap auto-icon"><i class="fas fa-magic"></i></div>
-                                    <div class="engine-title-wrap">
-                                        <div class="engine-name">Auto Mode</div>
-                                        <div class="engine-badge badge-auto" data-i18n="badge-smart">Smart Match</div>
-                                    </div>
-                                    <div class="engine-radio-circle"><i class="fas fa-check"></i></div>
-                                </div>
-                                <div class="engine-card-desc" data-i18n="auto-desc">
-                                    Automatically switches and matches the optimal rendering backend based on your hardware and game state.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 2. In-Emulator Mouse Smoothing Fix Section -->
-                    <div class="tweeks-section">
-                        <h3 class="tweeks-section-title">
-                            <i class="fas fa-mouse"></i>
-                            <span data-i18n="mouse-section-title">In-Emulator Mouse Smoothing (إصلاح الماوس الداخلي للمحاكي)</span>
-                        </h3>
-                        <div class="mouse-fix-container">
-                            <div class="mouse-fix-info">
-                                <div class="mouse-fix-icon"><i class="fas fa-crosshairs"></i></div>
-                                <div class="mouse-fix-text">
-                                    <h4 data-i18n="mouse-fix-head">Zero-Lag In-Emulator Mouse Stabilizer</h4>
-                                </div>
-                            </div>
-                            <div class="gl-actions-btn-group">
-                                <button class="mouse-fix-action-btn" data-action="fix-mouse-internal" id="btnFixMouseInternal">
-                                    <i class="fas fa-crosshairs"></i>
-                                    <span data-i18n="btn-apply-mouse-internal"> (Zero Deadzone)</span>
-                                </button>
-                                <button class="mouse-fix-action-btn btn-power-mode" data-action="boost-android-power" id="btnAndroidMaxPower">
-                                    <i class="fas fa-tachometer-alt"></i>
-                                    <span data-i18n="btn-apply-android-power"> (Max Power & 120 FPS)</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 3. Samsung 120Hz Tablets Section -->
-                    <div class="tweeks-section">
-                        <div class="section-header-flex">
-                            <h3 class="tweeks-section-title">
-                                <i class="fas fa-tablet-alt"></i>
-                                <span data-i18n="tablets-section-title">تابلت سامسونج 120Hz — 12 موديل</span>
-                            </h3>
-                            <span class="tablet-section-badge"><i class="fas fa-check-circle"></i> 120Hz Native</span>
-                        </div>
-                        <div class="tablets-grid">
-                            <!-- Card 1: Tab S11 Ultra -->
-                            <div class="tablet-card" data-action="set-model" data-board="SM-X930" data-name="Samsung Galaxy Tab S11 Ultra" data-gpu="Immortalis-G925 MC12" data-soc="Dimensity 9400+">
-                                <div class="tablet-card-top">
-                                    <h4 class="tablet-name">Samsung Galaxy Tab S11 Ultra</h4>
-                                    <div class="tablet-tag">SM-X930 · 120Hz</div>
-                                </div>
-                                <div class="tablet-btn-apply"><i class="fas fa-bolt"></i> <span data-i18n="btn-apply-model">تفعيل الموديل</span></div>
-                            </div>
-
-                            <!-- Card 2: Tab S11 -->
-                            <div class="tablet-card" data-action="set-model" data-board="SM-X730" data-name="Samsung Galaxy Tab S11" data-gpu="Immortalis-G925 MC12" data-soc="Dimensity 9400+">
-                                <div class="tablet-card-top">
-                                    <h4 class="tablet-name">Samsung Galaxy Tab S11</h4>
-                                    <div class="tablet-tag">SM-X730 · 120Hz</div>
-                                </div>
-                                <div class="tablet-btn-apply"><i class="fas fa-bolt"></i> <span data-i18n="btn-apply-model">تفعيل الموديل</span></div>
-                            </div>
-
-                            <!-- Card 3: Tab S10 Ultra -->
-                            <div class="tablet-card" data-action="set-model" data-board="SM-X920" data-name="Samsung Galaxy Tab S10 Ultra" data-gpu="Immortalis-G720 MC12" data-soc="Dimensity 9300+">
-                                <div class="tablet-card-top">
-                                    <h4 class="tablet-name">Samsung Galaxy Tab S10 Ultra</h4>
-                                    <div class="tablet-tag">SM-X920 · 120Hz</div>
-                                </div>
-                                <div class="tablet-btn-apply"><i class="fas fa-bolt"></i> <span data-i18n="btn-apply-model">تفعيل الموديل</span></div>
-                            </div>
-
-                            <!-- Card 4: Tab S10+ -->
-                            <div class="tablet-card" data-action="set-model" data-board="SM-X820" data-name="Samsung Galaxy Tab S10+" data-gpu="Immortalis-G720 MC12" data-soc="Dimensity 9300+">
-                                <div class="tablet-card-top">
-                                    <h4 class="tablet-name">Samsung Galaxy Tab S10+</h4>
-                                    <div class="tablet-tag">SM-X820 · 120Hz</div>
-                                </div>
-                                <div class="tablet-btn-apply"><i class="fas fa-bolt"></i> <span data-i18n="btn-apply-model">تفعيل الموديل</span></div>
-                            </div>
-
-                            <!-- Card 5: Tab S9 Ultra -->
-                            <div class="tablet-card" data-action="set-model" data-board="SM-X910" data-name="Samsung Galaxy Tab S9 Ultra" data-gpu="Adreno (TM) 740" data-soc="Snapdragon 8 Gen 2">
-                                <div class="tablet-card-top">
-                                    <h4 class="tablet-name">Samsung Galaxy Tab S9 Ultra</h4>
-                                    <div class="tablet-tag">SM-X910 · 120Hz</div>
-                                </div>
-                                <div class="tablet-btn-apply"><i class="fas fa-bolt"></i> <span data-i18n="btn-apply-model">تفعيل الموديل</span></div>
-                            </div>
-
-                            <!-- Card 6: Tab S9+ -->
-                            <div class="tablet-card" data-action="set-model" data-board="SM-X810" data-name="Samsung Galaxy Tab S9+" data-gpu="Adreno (TM) 740" data-soc="Snapdragon 8 Gen 2">
-                                <div class="tablet-card-top">
-                                    <h4 class="tablet-name">Samsung Galaxy Tab S9+</h4>
-                                    <div class="tablet-tag">SM-X810 · 120Hz</div>
-                                </div>
-                                <div class="tablet-btn-apply"><i class="fas fa-bolt"></i> <span data-i18n="btn-apply-model">تفعيل الموديل</span></div>
-                            </div>
-
-                            <!-- Card 7: Tab S9 -->
-                            <div class="tablet-card" data-action="set-model" data-board="SM-X710" data-name="Samsung Galaxy Tab S9" data-gpu="Adreno (TM) 740" data-soc="Snapdragon 8 Gen 2">
-                                <div class="tablet-card-top">
-                                    <h4 class="tablet-name">Samsung Galaxy Tab S9</h4>
-                                    <div class="tablet-tag">SM-X710 · 120Hz</div>
-                                </div>
-                                <div class="tablet-btn-apply"><i class="fas fa-bolt"></i> <span data-i18n="btn-apply-model">تفعيل الموديل</span></div>
-                            </div>
-
-                            <!-- Card 8: Tab S8 Ultra -->
-                            <div class="tablet-card" data-action="set-model" data-board="SM-X900" data-name="Samsung Galaxy Tab S8 Ultra" data-gpu="Adreno (TM) 730" data-soc="Snapdragon 8 Gen 1">
-                                <div class="tablet-card-top">
-                                    <h4 class="tablet-name">Samsung Galaxy Tab S8 Ultra</h4>
-                                    <div class="tablet-tag">SM-X900 · 120Hz</div>
-                                </div>
-                                <div class="tablet-btn-apply"><i class="fas fa-bolt"></i> <span data-i18n="btn-apply-model">تفعيل الموديل</span></div>
-                            </div>
-
-                            <!-- Card 9: Tab S8+ -->
-                            <div class="tablet-card" data-action="set-model" data-board="SM-X800" data-name="Samsung Galaxy Tab S8+" data-gpu="Adreno (TM) 730" data-soc="Snapdragon 8 Gen 1">
-                                <div class="tablet-card-top">
-                                    <h4 class="tablet-name">Samsung Galaxy Tab S8+</h4>
-                                    <div class="tablet-tag">SM-X800 · 120Hz</div>
-                                </div>
-                                <div class="tablet-btn-apply"><i class="fas fa-bolt"></i> <span data-i18n="btn-apply-model">تفعيل الموديل</span></div>
-                            </div>
-
-                            <!-- Card 10: Tab S8 -->
-                            <div class="tablet-card" data-action="set-model" data-board="SM-X700" data-name="Samsung Galaxy Tab S8" data-gpu="Adreno (TM) 730" data-soc="Snapdragon 8 Gen 1">
-                                <div class="tablet-card-top">
-                                    <h4 class="tablet-name">Samsung Galaxy Tab S8</h4>
-                                    <div class="tablet-tag">SM-X700 · 120Hz</div>
-                                </div>
-                                <div class="tablet-btn-apply"><i class="fas fa-bolt"></i> <span data-i18n="btn-apply-model">تفعيل الموديل</span></div>
-                            </div>
-
-                            <!-- Card 11: Tab S7+ -->
-                            <div class="tablet-card" data-action="set-model" data-board="SM-T970" data-name="Samsung Galaxy Tab S7+" data-gpu="Adreno (TM) 650" data-soc="Snapdragon 865+">
-                                <div class="tablet-card-top">
-                                    <h4 class="tablet-name">Samsung Galaxy Tab S7+</h4>
-                                    <div class="tablet-tag">SM-T970 · 120Hz</div>
-                                </div>
-                                <div class="tablet-btn-apply"><i class="fas fa-bolt"></i> <span data-i18n="btn-apply-model">تفعيل الموديل</span></div>
-                            </div>
-
-                            <!-- Card 12: Tab S7 -->
-                            <div class="tablet-card" data-action="set-model" data-board="SM-T870" data-name="Samsung Galaxy Tab S7" data-gpu="Adreno (TM) 650" data-soc="Snapdragon 865+">
-                                <div class="tablet-card-top">
-                                    <h4 class="tablet-name">Samsung Galaxy Tab S7</h4>
-                                    <div class="tablet-tag">SM-T870 · 120Hz</div>
-                                </div>
-                                <div class="tablet-btn-apply"><i class="fas fa-bolt"></i> <span data-i18n="btn-apply-model">تفعيل الموديل</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ==========================================
-                     PAGE 5: TWEAKS
+                     PAGE 4: TWEAKS
                      ========================================== -->
                 <div class="page" id="tweeks">
                     <div class="page-title-wrap">
@@ -1029,28 +836,10 @@
             'btn-delete-nx-folder': 'حذف مجلد NX',
             'btn-delete-gameloop': 'حذف جيم لوب',
             'page-gameloop': 'محسّن جيم لوب',
-            'nav-gl-settings': 'إعدادات المحاكي',
-            'gl-settings-title': 'إعدادات جيم لوب',
-            'gl-settings-subtitle': 'اختيار محرك الرسوميات، إصلاح الماوس الداخلي وموديلات سامسونج 120Hz',
-            'engine-section-title': 'اختيار محرك الرسوميات (Graphics Engine)',
-            'badge-high-perf': 'أداء فائق',
-            'badge-efficiency': 'وضع الكفاءة',
-            'badge-smart': 'مطابقة ذكية',
-            'vulkan-desc': 'وضع الأداء الفائق. أفضل استقرار، أعلى سلاسة وأقل تأخير إدخال مع لعبة ببجي.',
-            'opengl-desc': 'وضع الكفاءة والتوافقية العالية. يدعم أعلى جودة تكستشر لمعظم كروت الشاشة.',
-            'auto-desc': 'يقوم المحاكي باختيار المحرك الأفضل تلقائياً بناءً على مواصفات جهازك وحالة اللعبة.',
-            'mouse-section-title': 'إصلاح الماوس الداخلي للمحاكي (In-Emulator Mouse Fix)',
-            'mouse-fix-head': 'مثبت حركة وسلاسة الماوس وأقصى طاقة للأندرويد',
-            'btn-apply-mouse-internal': 'سلاسة الماوس وتصفير الديدزون',
-            'btn-apply-android-power': 'أقصى طاقة وثبات فريمات للأندرويد',
-            'tablets-section-title': 'تابلت سامسونج 120Hz — 12 موديل',
-            'btn-apply-model': 'تفعيل الموديل',
             'gameloop-subtitle': 'تسريع محاكي جيم لوب عبر ADB وإصلاحات OpenGL',
             'adb-status-label': 'اتصال جيم لوب عبر ADB:',
             'section-start-game': 'أدوات تشغيل المحاكي',
             'btn-boost': 'تسريع المحاكي',
-            'btn-fix-mouse': 'إصلاح وسلاسة الماوس',
-            'btn-flagship-gpu': 'تفعيل Adreno 830 و 120 فريم',
             'btn-fix-opengl': 'إصلاح Open GL',
             'btn-fix-vt': 'إصلاح VT',
             'btn-start-gl': 'تشغيل جيم لوب',
