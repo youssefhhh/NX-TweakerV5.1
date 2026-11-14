@@ -1414,9 +1414,9 @@ body {
    ========================================================================== */
 #notification-container {
   position: fixed;
-  top: 18px;
+  top: 50px;
   right: 18px;
-  z-index: 10000;
+  z-index: 100000;
   display: flex;
   flex-direction: column;
   gap: 8px;
