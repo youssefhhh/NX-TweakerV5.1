@@ -402,10 +402,49 @@ document.addEventListener("click", (e) => {
             return;
         }
 
+        // Engine switching cards
+        if (action.startsWith("set-engine-")) {
+            document.querySelectorAll(".engine-card").forEach(c => c.classList.remove("active"));
+            actionEl.classList.add("active");
+        }
+
         // Action-specific UI preparation (Boost & Fix Modals)
         if (action === "gameloop-boost" || action === "boost") {
             if (window.updateBoostModal) {
                 window.updateBoostModal(0, "Initializing GameLoop Boost...", "Connecting to ADB engine & preparing parameters...", "Step 0/9", "loading", "GAMELOOP ULTRA BOOST", "fas fa-rocket");
+            }
+        } else if (action === "fix-mouse") {
+            if (window.updateBoostModal) {
+                window.updateBoostModal(0, "Initializing Mouse Lag Fix...", "Configuring Windows precision & GameLoop input parameters...", "Step 0/5", "loading", "GAMELOOP MOUSE OPTIMIZER", "fas fa-mouse");
+            }
+        } else if (action === "fix-mouse-internal") {
+            if (window.updateBoostModal) {
+                window.updateBoostModal(0, "Initializing In-Emulator Mouse Smoothing...", "Zeroing RawInput deadzone, fixing aim anchor & VIP input scheduler...", "Step 0/5", "loading", "IN-EMULATOR MOUSE SMOOTHING", "fas fa-crosshairs");
+            }
+        } else if (action === "boost-android-power") {
+            if (window.updateBoostModal) {
+                window.updateBoostModal(0, "Initializing Android Max Power...", "Unlocking 8 cores, SurfaceFlinger VRR & terminating background services...", "Step 0/5", "loading", "ANDROID MAX POWER & ULTRA FPS", "fas fa-tachometer-alt");
+            }
+        } else if (action === "set-model") {
+            const board = actionEl.getAttribute("data-board") || "";
+            const name = actionEl.getAttribute("data-name") || "";
+            const gpu = actionEl.getAttribute("data-gpu") || "";
+            const soc = actionEl.getAttribute("data-soc") || "";
+
+            document.querySelectorAll(".tablet-card").forEach(c => c.classList.remove("active"));
+            actionEl.classList.add("active");
+
+            if (window.updateBoostModal) {
+                window.updateBoostModal(0, "Configuring " + name + "...", "Injecting 120Hz display profile, " + gpu + " emulation & Active.sav...", "Step 0/5", "loading", "120Hz TABLET PROFILE", "fas fa-tablet-alt");
+            }
+
+            if (window.chrome && window.chrome.webview) {
+                window.chrome.webview.postMessage("set-tablet-model:" + board + "|" + name + "|" + gpu + "|" + soc);
+            }
+            return;
+        } else if (action === "apply-gpu-flagship" || action === "apply-flagship-gpu") {
+            if (window.updateBoostModal) {
+                window.updateBoostModal(0, "Initializing Flagship GPU & 120 FPS...", "Injecting Qualcomm Adreno 830 preset & shader cache...", "Step 0/5", "loading", "FLAGSHIP GPU & 120 FPS", "fas fa-microchip");
             }
         } else if (action === "fix-opengl" || action === "fix-open-gl") {
             if (window.updateBoostModal) {
