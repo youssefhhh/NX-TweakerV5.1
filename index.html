@@ -90,6 +90,11 @@
                     <i class="fas fa-sliders-h"></i>
                     <span data-i18n="nav-settings">Settings</span>
                 </button>
+
+                <button class="nav-btn" data-page="block-update">
+                    <i class="fas fa-shield-alt"></i>
+                    <span data-i18n="nav-block-update">Block Update</span>
+                </button>
             </div>
 
             <div class="sidebar-footer">
@@ -623,6 +628,28 @@
                     </div>
                 </div>
 
+                <!-- ==========================================
+                     PAGE 6: BLOCK UPDATE
+                     ========================================== -->
+                <div class="page" id="block-update">
+                    <div class="page-title-wrap">
+                        <h1 class="page-title"><i class="fas fa-shield-alt"></i> <span data-i18n="page-block-update">BLOCK UPDATE</span></h1>
+                        <span class="page-subtitle" data-i18n="block-update-subtitle">Block GameLoop automatic updates by modifying Windows hosts file</span>
+                    </div>
+
+                    <div class="settings-grid">
+                        <button class="settings-btn" data-action="block-update" title="Add GameLoop update domains to hosts file">
+                            <i class="fas fa-ban"></i>
+                            <span class="settings-btn-text" data-i18n="btn-block-update">Block Update</span>
+                        </button>
+
+                        <button class="settings-btn" data-action="unblock-update" title="Remove GameLoop update domains from hosts file">
+                            <i class="fas fa-undo"></i>
+                            <span class="settings-btn-text" data-i18n="btn-unblock-update">Unblock Update</span>
+                        </button>
+                    </div>
+                </div>
+
             </div>
         </main>
     </div>
@@ -861,6 +888,13 @@
             'btn-visual-effects': 'التأثيرات المرئية',
             'btn-update-blocker': 'حظر التحديثات',
             'btn-defender': 'تعطيل الحماية',
+            'nav-block-update': 'حظر التحديثات',
+            'page-block-update': 'حظر تحديثات جيم لوب',
+            'block-update-subtitle': 'حظر التحديثات التلقائية لمحاكي جيم لوب عبر ملف الهوست (Hosts)',
+            'btn-block-update': 'حظر التحديثات',
+            'btn-unblock-update': 'إلغاء حظر التحديثات',
+            'block-update-target': 'ملف الهوست المستهدف',
+            'block-update-domains-title': 'النطاقات المحظورة في ملف Hosts:',
             'boost-modal-title': 'تسريع جيم لوب الفائق',
             'boost-finish-btn': 'تم بنجاح',
             'confirm-delete-title': 'تحذير',

@@ -420,6 +420,12 @@ document.addEventListener("click", (e) => {
         // Post message to C++ WebView2 host (C++ dispatches native loading & completed notifications)
         if (window.chrome && window.chrome.webview) {
             window.chrome.webview.postMessage(action);
+        } else {
+            if (action === "block-update") {
+                if (window.showSuccess) window.showSuccess("Block Update request sent. GameLoop update domains will be blocked in hosts file.", "Block Update");
+            } else if (action === "unblock-update") {
+                if (window.showSuccess) window.showSuccess("Unblock Update request sent. GameLoop update domains will be removed from hosts file.", "Unblock Update");
+            }
         }
         return;
     }
